@@ -92,12 +92,69 @@ class SortingRobot:
         """
         return self._light == "ON"
 
+    def pickup_item(self):
+        self._item = self._position
+
+    def holding(self):
+        return self._item
+
+    def length(self):
+        return len(self._list)
+
+    def left_child(self, root_index):
+        return (2 * root_index) + 1
+
+    def right_child(self, root_index):
+        return (2 * root_index) + 2
+
+    def heapify(self, arr, heap_size, root_index):
+
+        # ! Breaks rule
+        largest = root_index
+
+        if self.left_child(root_index) < heap_size and arr[self.left_child(root_index)] > arr[largest]:
+            largest = self.left_child(root_index)
+        if self.right_child(root_index) < heap_size and arr[self.right_child(root_index)] > arr[largest]:
+            largest = self.right_child(root_index)
+        if largest != root_index:
+            arr[root_index], arr[largest] = arr[largest], arr[root_index]
+            self.heapify(arr, heap_size, largest)
+
+
+    def heap_sort(self, arr):
+        for i in range(self.length(), -1, -1):
+            self.heapify(arr, self.length(), i)
+        for i in range(self.length() - 1, 0, -1):
+            arr[i], arr[0] = arr[0], arr[i]
+            self.heapify(arr, i, 0)
+
+
     def sort(self):
         """
         Sort the robot's list.
         """
-        # Fill this out
-        pass
+        return self.heap_sort(self._list)
+        """ 
+
+        *
+        *   Initially, I felt like this needed a merge sort,
+        *   it really felt like the way to do this efficiently
+        *
+        *   The 'light' boolean made me think of the terrible bubble sort,
+        *   which I implemented briefly to no avail
+        *
+        *   I also implemented a merge-in-place that also took way too long
+        *
+        *   I am currently implementing heap sort that's based mostly on helper functions
+        * 
+        *   I am not sure about how these rules are supposed to work together:
+        *       You may NOT store any variables. (=)
+        *       You may NOT access any instance variables directly. (self._anything)
+        *       You may define robot helper methods, as long as they follow all the rules.
+        *
+
+        """
+
 
 
 if __name__ == "__main__":
