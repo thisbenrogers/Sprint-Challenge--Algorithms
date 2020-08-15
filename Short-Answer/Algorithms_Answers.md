@@ -3,12 +3,15 @@
 ## Exercise I
 
 a)
+    O(log n)
 
 
 b)
+    O(n log n)
 
 
 c)
+    O(n!) (This psuedocode will inifitely loop)
 
 ## Exercise II
 
